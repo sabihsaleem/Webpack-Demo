@@ -23,12 +23,21 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      chunks: "all",
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all",
+        },
+      },
     },
+    runtimeChunk: "single",
+    moduleIds: "deterministic",
   },
   plugins: [new HtmlWebpackPlugin()],
   output: {
-    filename: "[name].bundle.js",
+    filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
+    clean: true,
   },
 };
